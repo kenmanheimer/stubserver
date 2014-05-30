@@ -5,10 +5,11 @@
 Adapted from http://stackoverflow.com/a/12786032/1052133
 """
 
+PORT = 80
+
 import SimpleHTTPServer, SocketServer
 import logging
 import sys
-PORT = 80
 
 class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
 
@@ -19,13 +20,11 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
     do_POST = do_GET
 
 if __name__ == "__main__":
-    Handler = ServerHandler
-
-    httpd = SocketServer.TCPServer(("", PORT), Handler)
+    httpd = SocketServer.TCPServer(("", PORT), ServerHandler)
     root = logging.getLogger()
     root.setLevel(logging.DEBUG)
     try:
-        print "\nserving at port", PORT
+        print "\nServing at port", PORT
         httpd.serve_forever()
     finally:
         print "\n\n... INTERRUPTED. Shutting down...\n\n"
